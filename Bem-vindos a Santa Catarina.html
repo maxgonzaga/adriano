@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bem-vindos a Santa Catarina</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#06172e;--navy2:#0b2a4a;--green:#2f6b4f;--gold:#d9b86c;--ink:#f4f1ea;--mut:#b9c4d2;--earth:#8a6a4b;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}html,body{height:100%;margin:0}
+body{background:var(--navy);color:var(--ink);font:400 16px/1.55 Inter,system-ui,sans-serif;overflow:hidden}
+h1,h2,h3{font-family:"Playfair Display",Georgia,serif;margin:0 0 .4em;line-height:1.15}
+h2{font-size:clamp(1.7rem,4.5vw,2.8rem)}h2 small{display:block;font:500 .8rem Inter,sans-serif;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:.5rem}
+.slide{position:absolute;inset:0;padding:28px clamp(18px,5vw,64px) 96px;overflow-y:auto;opacity:0;visibility:hidden;transform:scale(1.04);transition:opacity .9s,transform 1.2s,visibility 0s .9s;background:linear-gradient(160deg,var(--navy),var(--navy2) 60%,#0d3b3a)}
+.slide.on{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+.wrap{max-width:1000px;margin:0 auto}.lead{color:var(--mut);max-width:60ch}
+.rv>*{opacity:0;transform:translateY(14px)}.on .rv>*{animation:up .9s forwards}
+.on .rv>*:nth-child(2){animation-delay:.2s}.on .rv>*:nth-child(3){animation-delay:.4s}.on .rv>*:nth-child(4){animation-delay:.6s}.on .rv>*:nth-child(5){animation-delay:.8s}
+@keyframes up{to{opacity:1;transform:none}}
+button{font:inherit;color:inherit;cursor:pointer}
+.btn{background:linear-gradient(135deg,var(--gold),#b8924a);color:#1a1405;border:0;border-radius:99px;padding:.8em 1.6em;font-weight:600;box-shadow:0 6px 20px #0006;transition:transform .25s,box-shadow .25s}
+.btn:hover{transform:translateY(-2px)}.btn:active{transform:scale(.96)}
+.btn.o{background:#ffffff14;color:var(--ink);border:1px solid #ffffff55}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin-top:22px}
+.card{position:relative;border-radius:16px;padding:18px;min-height:130px;border:1px solid #ffffff22;text-align:left;overflow:hidden;box-shadow:0 8px 24px #0005;transition:transform .5s,box-shadow .5s,border-color .5s;width:100%}
+.card:hover,.card:focus-visible,.card.open{transform:translateY(-6px) scale(1.02);border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)66,0 16px 36px #000a}
+.card .ic{font-size:1.8rem}.card h3{font-size:1.2rem;margin:.3rem 0}
+.card .d{max-height:0;opacity:0;overflow:hidden;transition:max-height .6s,opacity .6s;font-size:.92rem;color:#f4f1eacc}
+.card:hover .d,.card:focus-visible .d,.card.open .d{max-height:200px;opacity:1}
+.card .go{margin-top:8px;display:inline-block;color:var(--gold);font-weight:600;font-size:.85rem}
+.panel{margin-top:18px;border-radius:16px;border:1px solid #ffffff22;background:#ffffff0d;padding:18px;min-height:120px;display:flex;gap:16px;flex-wrap:wrap}
+.panel .sw{flex:0 0 110px;min-height:110px;border-radius:12px;display:grid;place-items:center;font-size:2.4rem}
+.panel .tx{flex:1 1 240px}.panel .cu{color:var(--gold);font-size:.92rem}
+.tl{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px;border-bottom:1px solid #ffffff33;padding-bottom:12px}
+.tl button{background:#ffffff0f;border:1px solid #ffffff33;border-radius:99px;padding:.5em 1em;font-size:.9rem;transition:.3s}
+.tl button.on2,.tl button:hover{background:var(--gold);color:#1a1405;border-color:var(--gold)}
+#map{width:100%;max-width:560px;display:block;margin:14px auto 0}
+.out{fill:#16503a55;stroke:var(--gold);stroke-width:1.5;stroke-dasharray:1400;stroke-dashoffset:1400}.on .out{animation:dr 3s forwards}
+@keyframes dr{to{stroke-dashoffset:0}}
+.mk{cursor:pointer}.mk circle.c{fill:var(--gold);stroke:#fff;stroke-width:2;transition:r .3s}.mk:hover circle.c,.mk.sel circle.c{r:9}
+.mk circle.p{fill:var(--gold);opacity:.4;animation:pl 2.4s infinite}.mk text{fill:#fff;font:600 11px Inter,sans-serif;paint-order:stroke;stroke:#06172e;stroke-width:3}
+@keyframes pl{from{r:6;opacity:.5}to{r:18;opacity:0}}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.chips button{background:#ffffff0f;border:1px solid #ffffff44;border-radius:99px;padding:.55em 1.1em;transition:.3s}.chips button.on2{background:var(--gold);color:#1a1405}
+.tile{transition:opacity .6s,transform .6s,filter .6s}.dim{opacity:.3;filter:saturate(.3)}.hl{transform:scale(1.03);border-color:var(--gold)}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:.8em 1em;border-radius:12px;background:#ffffff0f;border:1px solid #ffffff33;transition:.3s}
+.opt:hover:not(:disabled){background:#ffffff1f}.opt.ok{background:#2f6b4f;border-color:#7fd1a0;animation:pop .6s}.opt.no{background:#7a2f2f;animation:sh .5s}
+@keyframes pop{50%{transform:scale(1.03);box-shadow:0 0 30px #7fd1a088}}@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+/* hero */
+#s0{padding:0;background:#000}#hs{position:absolute;inset:0;width:100%;height:100%;transition:transform 1s ease-in,filter 1s}
+#s0.fly #hs{transform:scale(1.7) translateY(6%);filter:brightness(.4)}
+.sun{animation:none;transform:translateY(150px)}.on .sun{animation:rise 7s 1s forwards ease-out}@keyframes rise{to{transform:none}}
+.veil{position:absolute;inset:0;background:#000;pointer-events:none;opacity:1}.on .veil{animation:fade 5s 1s forwards}@keyframes fade{to{opacity:.0}}
+.hc{position:relative;z-index:2;min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px 24px 110px;text-shadow:0 2px 20px #000a}
+.hc h1{font-size:clamp(2.2rem,7vw,4.6rem);opacity:0}.hc p{opacity:0;max-width:44ch;font-size:1.1rem}.hc .btn{opacity:0}.hc small{opacity:0;margin-top:14px;color:var(--mut)}
+.on .hc h1{animation:up 2s 3.5s forwards}.on .hc p{animation:up 2s 4.5s forwards}.on .hc .btn{animation:up 1.5s 5.5s forwards}.on .hc small{animation:up 1.5s 6.2s forwards}
+#nav{position:fixed;left:0;right:0;bottom:0;z-index:9;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(transparent,#06172ecc 40%)}
+#nav button{background:#ffffff1a;border:1px solid #ffffff44;border-radius:50%;width:44px;height:44px;font-size:1rem;backdrop-filter:blur(6px)}
+#bar{position:fixed;top:0;left:0;height:3px;background:var(--gold);z-index:10;transition:width .8s}#cnt{font-size:.85rem;color:var(--mut);min-width:48px;text-align:center}
+#snd{position:fixed;top:calc(10px + env(safe-area-inset-top,0px));right:12px;z-index:10;background:#0008;border:1px solid #fff4;border-radius:99px;padding:.3em .9em;font-size:.8rem}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-delay:0s!important;transition-duration:.01s!important}}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<button id="snd" aria-label="Alternar som ambiente">🔈 Som</button>
+<main>
+<!-- 0 -->
+<section class="slide" id="s0" aria-label="Abertura">
+<svg id="hs" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+<defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#030b18"/><stop offset=".6" stop-color="#0b2a4a"/><stop offset="1" stop-color="#e2b873"/></linearGradient>
+<linearGradient id="se" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c99a5b"/><stop offset=".25" stop-color="#14527a"/><stop offset="1" stop-color="#06203c"/></linearGradient>
+<radialGradient id="sg"><stop offset="0" stop-color="#fff3c9"/><stop offset=".4" stop-color="#f0c36d" stop-opacity=".6"/><stop offset="1" stop-color="#f0c36d" stop-opacity="0"/></radialGradient></defs>
+<rect width="1000" height="600" fill="url(#sk)"/>
+<g class="sun"><circle cx="600" cy="360" r="150" fill="url(#sg)"/><circle cx="600" cy="360" r="34" fill="#fff3c9"/></g>
+<rect y="380" width="1000" height="220" fill="url(#se)"/>
+<g stroke="#f6dca0" stroke-opacity=".35" stroke-width="2" fill="none"><path d="M520 400h160M545 415h110M570 432h60"/></g>
+<path d="M0 390L90 300 170 350 270 250 380 340 440 310 520 390Z" fill="#0f3a33"/>
+<path d="M0 410L120 330 200 380 330 300 430 385 520 405 520 600 0 600Z" fill="#0a2a26" opacity=".0"/>
+<path d="M700 392L780 330 860 372 940 300 1000 340V392Z" fill="#0f3a33"/>
+<path d="M0 600V470Q150 410 330 450T520 500 0 600Z" fill="#0a2a26"/>
+<path d="M1000 600V490Q860 440 720 480T520 560L560 600Z" fill="#12402f"/>
+</svg>
+<div class="veil"></div>
+<div class="hc"><h1>Bem-vindos a Santa Catarina!</h1>
+<p>Um lugar onde a natureza encanta, a cultura conta histórias e cada caminho revela uma nova descoberta.</p>
+<button class="btn" id="start" style="margin-top:22px">Começar a explorar</button>
+<small>Esta apresentação é interativa: clique, toque e explore.</small></div>
+</section>
+<!-- 1 -->
+<section class="slide" id="s1"><div class="wrap rv">
+<h2><small>Descubra</small>Descubra Santa Catarina</h2>
+<p class="lead">Mar, serra, floresta e cidades cheias de memória: um estado de paisagens diversas. Toque em um cartão para conhecer.</p>
+<div class="grid" id="g1"></div></div></section>
+<!-- 2 -->
+<section class="slide" id="s2"><div class="wrap rv">
+<h2><small>Mapa interativo</small>Lugares que encantam</h2>
+<p class="lead">Selecione um marcador para conhecer o destino. (Mapa estilizado, sem escala.)</p>
+<svg id="map" viewBox="0 0 400 300" role="group" aria-label="Mapa estilizado de Santa Catarina">
+<path class="out" d="M20 60L40 38 330 28 352 36 350 62 364 98 372 140 360 178 372 214 340 262 293 272 270 235 215 190 120 150 60 125 22 100Z"/>
+<text x="385" y="160" fill="#7fb3d5" font-size="11" font-family="Inter" text-anchor="end" opacity=".7">Oceano Atlântico</text></svg>
+<div class="panel" id="p2" aria-live="polite"><div class="tx">Escolha um marcador no mapa.</div></div></div></section>
+<!-- 3 -->
+<section class="slide" id="s3"><div class="wrap rv">
+<h2><small>Cultura</small>Uma cultura cheia de histórias</h2>
+<p class="lead">Santa Catarina foi feita por muitos povos e saberes. Nenhuma tradição é única: todas se encontram aqui.</p>
+<div class="tl" id="t3" role="tablist"></div>
+<div class="panel" id="p3" aria-live="polite"></div></div></section>
+<!-- 4 -->
+<section class="slide" id="s4"><div class="wrap rv">
+<h2><small>Gastronomia</small>Sabores de Santa Catarina</h2>
+<p class="lead">Toque em um prato para saber mais.</p>
+<div class="grid" id="g4"></div>
+<div class="panel" id="p4" aria-live="polite"><div class="tx">Escolha um prato.</div></div></div></section>
+<!-- 5 -->
+<section class="slide" id="s5"><div class="wrap rv">
+<h2><small>Natureza e aventura</small>Qual experiência combina com você?</h2>
+<div class="chips" id="c5" role="group" aria-label="Escolha uma experiência"></div>
+<p class="lead" id="m5">Escolha uma experiência para destacar sugestões.</p>
+<div class="grid" id="g5"></div></div></section>
+<!-- 6 -->
+<section class="slide" id="s6"><div class="wrap rv">
+<h2><small>Curiosidades</small>Quanto você sabe sobre SC?</h2>
+<div class="panel" style="display:block" id="q" aria-live="polite"></div></div></section>
+<!-- 7 -->
+<section class="slide" id="s7" style="text-align:center;background:linear-gradient(180deg,#06172e,#0f3a33 70%,#1b4d3a)"><div class="wrap rv" style="padding-top:8vh">
+<div style="font-size:3rem">🌊⛰️🌿</div>
+<h2 style="font-size:clamp(2rem,6vw,3.6rem)">Santa Catarina espera por você.</h2>
+<p class="lead" style="margin:0 auto 24px">Descubra novos lugares, conheça histórias, experimente sabores e leve consigo lembranças que vão muito além da viagem.</p>
+<div><button class="btn" id="again">Explorar novamente</button> <button class="btn o" id="dest">Conhecer os destinos</button></div></div></section>
+</main>
+<nav id="nav" aria-label="Navegação"><button id="pv" aria-label="Voltar">◀</button><button id="hm" aria-label="Início">⌂</button><span id="cnt"></span><button id="nx" aria-label="Avançar">▶</button></nav>
+<script>
+var $=function(s){return document.querySelector(s)},S=[].slice.call(document.querySelectorAll(".slide")),cur=0;
+function go(i){i=Math.max(0,Math.min(S.length-1,i));S.forEach(function(s,k){s.classList.toggle("on",k===i)});cur=i;S[i].scrollTop=0;
+$("#bar").style.width=((i+1)/S.length*100)+"%";$("#cnt").textContent=(i+1)+" / "+S.length;$("#pv").disabled=i==0;$("#nx").disabled=i==S.length-1;$("#nav").style.display=i==0?"none":"flex"}
+$("#pv").onclick=function(){go(cur-1)};$("#nx").onclick=function(){go(cur+1)};$("#hm").onclick=function(){go(0)};
+document.onkeydown=function(e){if(e.key=="ArrowRight")go(cur+1);if(e.key=="ArrowLeft")go(cur-1)};
+$("#start").onclick=function(){S[0].classList.add("fly");setTimeout(function(){go(1);S[0].classList.remove("fly")},900)};
+$("#again").onclick=function(){go(0)};$("#dest").onclick=function(){go(2)};
+function G(a,b){return "linear-gradient(135deg,"+a+","+b+")"}
+var gr=[G("#14527a","#06203c"),G("#2f6b4f","#0f3a33"),G("#1d6a62","#0b3b4a"),G("#8a6a4b","#4a3524"),G("#a8793c","#5a3a1a"),G("#3b6f8f","#1a3c55")];
+function cards(el,arr,fn){el.innerHTML="";arr.forEach(function(c,i){var b=document.createElement("button");b.className="card tile";b.style.background=c.g||gr[i%6];
+b.innerHTML='<div class="ic">'+c.ic+'</div><h3>'+c.t+'</h3><div class="d">'+(c.d||"")+(c.go?'<br><span class="go">Explorar →</span>':"")+'</div>';
+b.onclick=function(){var open=b.classList.contains("open");[].forEach.call(el.children,function(x){x.classList.remove("open")});if(!open)b.classList.add("open");fn&&fn(c,i,open)};el.appendChild(b)})}
+/* 1 */
+var D=[{ic:"🏖️",t:"Praias e litoral",d:"Faixa de mar com praias urbanas, selvagens e baías abrigadas.",go:[5,"mar"]},
+{ic:"⛰️",t:"Serra Catarinense",d:"Campos de altitude, mirantes e dias frios, com geadas frequentes.",go:[5,"montanha"]},
+{ic:"🌿",t:"Florestas, rios e cachoeiras",d:"Mata Atlântica, parques e trilhas para caminhar com calma.",go:[5,"aventura"]},
+{ic:"🏛️",t:"Cidades históricas",d:"Centros e vilas com arquitetura que guarda a memória do estado.",go:[2]},
+{ic:"🎶",t:"Festas e tradições",d:"Celebrações que misturam música, dança, fé e gastronomia.",go:[3]}];
+cards($("#g1"),D,function(c,i,open){if(open&&c.go){go(c.go[0]);if(c.go[1])setX(c.go[1])}});
+/* 2 */
+var M=[{n:"Florianópolis",x:369,y:135,i:"🏝️",d:"A capital fica em grande parte numa ilha, com praias, lagoas e dunas, ligada ao continente por pontes.",c:"A Ponte Hercílio Luz é um dos cartões-postais da cidade."},
+{n:"Blumenau",x:335,y:84,i:"🍺",d:"Cidade do Vale do Itajaí, fundada em 1850, com arquitetura e tradições de influência alemã.",c:"Realiza a Oktoberfest, uma das maiores festas alemãs do mundo."},
+{n:"Pomerode",x:326,y:68,i:"🏡",d:"Conhecida pelo casario em estilo enxaimel e pela forte herança cultural germânica.",c:"O idioma pomerano ainda é falado por parte da população."},
+{n:"Joinville",x:350,y:37,i:"🩰",d:"Maior cidade do estado, com intensa vida cultural e tradição na dança.",c:"Sedia o Festival de Dança de Joinville e a Escola do Teatro Bolshoi no Brasil."},
+{n:"Urubici",x:301,y:167,i:"🏔️",d:"Cidade serrana de campos de altitude, cânions e formações rochosas.",c:"Está entre os lugares mais frios do Brasil, com geadas frequentes."},
+{n:"Balneário Camboriú",x:362,y:92,i:"🏙️",d:"Orla urbana movimentada, com praia central e prédios altos ao fundo.",c:"Seu skyline concentra alguns dos edifícios residenciais mais altos do país."}];
+var mp=$("#map");M.forEach(function(m,k){var g=document.createElementNS("http://www.w3.org/2000/svg","g");g.setAttribute("class","mk");g.setAttribute("tabindex","0");g.setAttribute("role","button");g.setAttribute("aria-label",m.n);
+var lx=(m.n=="Pomerode"||m.n=="Urubici")?-12:12,an=lx<0?"end":"start",ty=m.n=="Blumenau"?14:4;
+g.innerHTML='<circle class="p" cx="'+m.x+'" cy="'+m.y+'" r="6"/><circle class="c" cx="'+m.x+'" cy="'+m.y+'" r="6"/><text x="'+(m.x+(m.n=="Blumenau"?-10:lx))+'" y="'+(m.y+ty)+'" text-anchor="'+(m.n=="Blumenau"?"end":an)+'">'+m.n+'</text>';
+function sel(){[].forEach.call(mp.querySelectorAll(".mk"),function(x){x.classList.remove("sel")});g.classList.add("sel");
+$("#p2").innerHTML='<div class="sw" style="background:'+gr[k%6]+'">'+m.i+'</div><div class="tx"><h3>'+m.n+'</h3><p>'+m.d+'</p><p class="cu">✦ Curiosidade: '+m.c+'</p></div>'}
+g.onclick=sel;g.onkeydown=function(e){if(e.key=="Enter"||e.key==" "){e.preventDefault();sel()}};mp.appendChild(g)});
+/* 3 */
+var C=[{n:"Povos originários",i:"🪶",d:"O território já era habitado por povos como Xokleng (Laklãnõ), Kaingang e Guarani, que mantêm línguas, saberes e artesanato, como a cestaria, até hoje.",e:"Há milênios"},
+{n:"Açorianos",i:"⛵",d:"Famílias vindas dos Açores chegaram ao litoral no século XVIII e deixaram marcas na pesca artesanal, na renda de bilro, nas festas religiosas e em folguedos como o boi-de-mamão.",e:"Século XVIII"},
+{n:"Afro-brasileiros",i:"🥁",d:"Africanos e seus descendentes ajudaram a construir o estado. Comunidades quilombolas e manifestações como o Maçambique mantêm viva essa memória.",e:"Desde o período colonial"},
+{n:"Alemães",i:"🏠",d:"A partir de 1850, imigrantes de origem alemã fundaram colônias no Vale do Itajaí e no Norte, trazendo a arquitetura enxaimel, a música, os corais e festas como a Oktoberfest.",e:"Século XIX"},
+{n:"Italianos",i:"🍇",d:"A partir da década de 1870, imigrantes italianos se estabeleceram, sobretudo no Sul, e contribuíram com a vinicultura, a culinária e as festas comunitárias.",e:"Final do século XIX"}];
+C.forEach(function(c,k){var b=document.createElement("button");b.setAttribute("role","tab");b.textContent=c.e+" · "+c.n;
+b.onclick=function(){[].forEach.call($("#t3").children,function(x){x.classList.remove("on2")});b.classList.add("on2");$("#p3").innerHTML='<div class="sw" style="background:'+gr[k%6]+'">'+c.i+'</div><div class="tx"><h3>'+c.n+'</h3><p>'+c.d+'</p></div>'};$("#t3").appendChild(b);if(!k)b.click()});
+/* 4 */
+var F=[{ic:"🦐",t:"Sequência de camarão",d:"Camarão em vários preparos, servidos em sequência. Um clássico dos restaurantes do litoral.",r:"Litoral, com destaque para a Grande Florianópolis"},
+{ic:"🐟",t:"Tainha",d:"Peixe ligado à pesca artesanal, tradição de comunidades litorâneas de origem açoriana.",r:"Litoral, especialmente Florianópolis"},
+{ic:"🍰",t:"Cuca",d:"Bolo coberto de farofa doce, com frutas ou outros recheios. Receita de influência alemã.",r:"Vale do Itajaí e regiões de colonização alemã"},
+{ic:"🍗",t:"Marreco recheado",d:"Prato festivo, frequentemente acompanhado de repolho roxo. Tradição da culinária de Blumenau.",r:"Blumenau e Vale do Itajaí"},
+{ic:"🧀",t:"Produtos coloniais",d:"Queijos, salames, geleias, pães e conservas feitos em propriedades familiares.",r:"Diversas regiões do estado"}];
+cards($("#g4"),F,function(c,i,open){$("#p4").innerHTML=open?'<div class="tx">Escolha um prato.</div>':'<div class="sw" style="background:'+gr[i%6]+'">'+c.ic+'</div><div class="tx"><h3>'+c.t+'</h3><p>'+c.d+'</p><p class="cu">📍 '+c.r+'</p></div>'});
+/* 5 */
+var X=[{k:"mar",l:"Relaxar junto ao mar",m:"Praias, costões e orlas para desacelerar."},{k:"montanha",l:"Explorar as montanhas",m:"Serras, mirantes e paisagens de altitude. Leve agasalho."},{k:"cultura",l:"Conhecer a cultura local",m:"Arquitetura, festas e sabores das comunidades."},{k:"aventura",l:"Viver aventuras na natureza",m:"Trilhas e áreas de preservação. Respeite as regras de cada parque."}];
+var N=[{ic:"🏖️",t:"Praias de Florianópolis",d:"Dezenas de praias, de águas calmas a mar aberto.",k:["mar"]},
+{ic:"🛣️",t:"Serra do Rio do Rastro",d:"Estrada de curvas com mirantes sobre a serra.",k:["montanha"]},
+{ic:"🪨",t:"Pedra Furada, Urubici",d:"Formação rochosa com vista ampla da serra.",k:["montanha","aventura"]},
+{ic:"🥾",t:"Parque Estadual da Serra do Tabuleiro",d:"Área de preservação com trilhas na Mata Atlântica.",k:["aventura"]},
+{ic:"🏘️",t:"Blumenau e Pomerode",d:"Arquitetura enxaimel, museus e culinária de herança alemã.",k:["cultura"]},
+{ic:"⚓",t:"São Francisco do Sul",d:"Centro histórico à beira da baía, com casario antigo.",k:["cultura","mar"]}];
+cards($("#g5"),N.map(function(n,i){return{ic:n.ic,t:n.t,d:n.d,g:gr[i%6]}}));
+function setX(k){[].forEach.call($("#c5").children,function(b){b.classList.toggle("on2",b.dataset.k==k)});
+[].forEach.call($("#g5").children,function(el,i){var h=N[i].k.indexOf(k)>-1;el.classList.toggle("dim",!h);el.classList.toggle("hl",h)});
+X.forEach(function(x){if(x.k==k)$("#m5").textContent=x.l+": "+x.m})}
+X.forEach(function(x){var b=document.createElement("button");b.textContent=x.l;b.dataset.k=x.k;b.onclick=function(){setX(x.k)};$("#c5").appendChild(b)});
+/* 6 */
+var Q=[{q:"Qual cidade catarinense é conhecida como a Cidade das Flores?",o:["Joinville","Chapecó","Lages"],a:0,e:"Joinville é chamada de Cidade das Flores, entre outros apelidos.",h:"Ela também sedia um famoso festival de dança."},
+{q:"Qual cidade realiza a Oktoberfest, uma das maiores festas alemãs do mundo?",o:["Lages","Blumenau","Chapecó"],a:1,e:"A Oktoberfest de Blumenau celebra a herança cultural alemã.",h:"É uma cidade do Vale do Itajaí, fundada em 1850."},
+{q:"Em qual cidade serrana fica a Pedra Furada?",o:["Pomerode","Joinville","Urubici"],a:2,e:"A Pedra Furada é um dos atrativos naturais de Urubici.",h:"Pense nas cidades de clima frio da serra."},
+{q:"Qual peixe é associado à tradição pesqueira artesanal do litoral catarinense?",o:["Salmão","Tainha","Atum"],a:1,e:"A pesca da tainha é tradição de comunidades litorâneas, com raízes açorianas.",h:"É um peixe típico de águas costeiras, pescado no outono e no inverno."},
+{q:"A cuca é uma receita de influência de qual tradição?",o:["Italiana","Japonesa","Alemã"],a:2,e:"A cuca chegou com imigrantes alemães e virou receita de muitas casas catarinenses.",h:"Lembra o streusel: um bolo com farofa doce."},
+{q:"A maior parte da capital, Florianópolis, fica em qual ambiente?",o:["Em uma ilha","No planalto","Na serra"],a:0,e:"Florianópolis fica principalmente na Ilha de Santa Catarina, ligada ao continente por pontes.",h:"A cidade é cercada por mar."}];
+var qi=0,sc=0,tr=0;
+function rq(){var box=$("#q");if(qi>=Q.length){box.innerHTML='<h3>Resultado: '+sc+' de '+Q.length+'</h3><p>'+(sc>=5?"Você conhece muito bem Santa Catarina! 🌟":sc>=3?"Muito bem! Ainda há muito a descobrir.":"Boa viagem de descobertas pela frente!")+'</p><button class="btn" id="rs">Reiniciar desafio</button>';$("#rs").onclick=function(){qi=0;sc=0;rq()};return}
+var q=Q[qi];tr=0;box.innerHTML='<p class="cu">Pergunta '+(qi+1)+' de '+Q.length+' · Pontos: '+sc+'</p><h3>'+q.q+'</h3><div id="os"></div><p id="fb"></p>';
+q.o.forEach(function(t,k){var b=document.createElement("button");b.className="opt";b.textContent="ABC"[k]+") "+t;b.onclick=function(){
+if(k==q.a){b.classList.add("ok");if(!tr)sc++;[].forEach.call($("#os").children,function(x){x.disabled=true});$("#fb").innerHTML="✅ "+q.e+'<br><br><button class="btn" id="nq">'+(qi==Q.length-1?"Ver resultado":"Próxima")+'</button>';$("#nq").onclick=function(){qi++;rq()}}
+else{tr++;b.classList.add("no");b.disabled=true;$("#fb").textContent="Quase! Dica: "+q.h+" Tente de novo."}};$("#os").appendChild(b)})}
+rq();go(0);
+/* som */
+var ac,on=false;$("#snd").onclick=function(){if(!ac){ac=new(window.AudioContext||window.webkitAudioContext)();var b=ac.createBuffer(1,ac.sampleRate*4,ac.sampleRate),d=b.getChannelData(0),l=0;for(var i=0;i<d.length;i++){l=(l+.02*(Math.random()*2-1))/1.02;d[i]=l*3.5}
+var s=ac.createBufferSource();s.buffer=b;s.loop=true;var f=ac.createBiquadFilter();f.type="lowpass";f.frequency.value=500;var g=ac.createGain();g.gain.value=.5;var o=ac.createOscillator(),og=ac.createGain();o.frequency.value=.1;og.gain.value=.3;o.connect(og);og.connect(g.gain);o.start();s.connect(f);f.connect(g);g.connect(ac.destination);s.start()}
+on=!on;on?ac.resume():ac.suspend();this.textContent=on?"🔊 Som":"🔈 Som"};
+</script>
+</body>
+</html>

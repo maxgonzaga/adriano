@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aventura das Lendas de Santa Catarina</title>
+<style>
+:root{--bg:#101d2b;--panel:#1b3042;--panel2:#243d51;--gold:#ffd166;--mint:#8de0bd;--text:#f4f7fb;--muted:#b8c7d6;--danger:#ff8b8b}
+*{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at top,#24495a 0,#101d2b 55%);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+button{font:inherit;cursor:pointer;border:0;border-radius:12px;padding:11px 15px;font-weight:800;color:#142333;background:var(--gold);transition:transform .15s,filter .15s}
+button:hover{filter:brightness(1.08);transform:translateY(-1px)}button:focus-visible{outline:3px solid white;outline-offset:3px}
+button.secondary{background:#36566d;color:white;border:1px solid #54748b}button:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.wrap{max-width:1000px;margin:auto;padding:20px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px}.logo{font-size:34px;background:#f4c95d;color:#162638;border-radius:15px;width:56px;height:56px;display:grid;place-items:center}
+h1{font-size:clamp(23px,4vw,36px);margin:0;line-height:1.1}.sub{color:var(--muted);margin:6px 0 0}.stats{display:flex;gap:8px;flex-wrap:wrap}.pill{background:#1b3042;border:1px solid #35536a;border-radius:999px;padding:8px 12px;font-size:14px}
+.hero{margin:22px 0 18px;padding:22px;border:1px solid #35536a;border-radius:22px;background:linear-gradient(120deg,#244b57,#1b3042 70%);display:flex;justify-content:space-between;align-items:center;gap:18px}.hero p{max-width:620px;color:#d2e1e9;margin:8px 0 0}.hero-art{font-size:60px;white-space:nowrap}
+h2{font-size:22px;margin:24px 0 12px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:13px}.gamecard{background:var(--panel);border:1px solid #35536a;border-radius:18px;padding:17px;display:flex;flex-direction:column;min-height:205px}.gameicon{font-size:36px}.gamecard h3{margin:8px 0 4px}.gamecard p{margin:0 0 16px;color:var(--muted);font-size:14px;flex:1}.gamecard button{width:100%}.locked{color:var(--gold);font-size:12px;font-weight:800;margin-top:9px}
+.panel{background:var(--panel);border:1px solid #35536a;border-radius:20px;padding:18px;margin-top:18px}.hidden{display:none!important}.bar{height:9px;background:#0d1924;border-radius:99px;overflow:hidden;margin:10px 0}.bar span{display:block;height:100%;background:var(--mint);width:0;transition:width .2s}
+.gamehead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.gamehead h2{margin:0}.gamearea{margin-top:15px;min-height:250px;background:#0e1a25;border:1px solid #2f4c60;border-radius:16px;padding:15px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;overflow:hidden}
+canvas{display:block;max-width:100%;border-radius:10px;background:#0a1520;touch-action:manipulation}.controls{display:flex;gap:9px;flex-wrap:wrap;justify-content:center}.note{color:var(--muted);font-size:13px;text-align:center;margin:0}.status{font-weight:800;color:var(--mint);text-align:center;min-height:24px}
+.puzzle{display:grid;grid-template-columns:repeat(3,minmax(65px,90px));gap:5px}.tile{height:75px;border-radius:10px;background:#31566b;color:white;font-size:24px;border:1px solid #52768a}.tile.blank{background:#101d2b;border:1px dashed #35536a}
+.choices{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}.choices button{background:#35566b;color:white}.choices button.correct{background:var(--mint);color:#142333}
+.frogrow{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}.lilypad{width:58px;height:58px;border-radius:50%;background:#2f795f;color:white;font-size:22px}.lilypad.frog{background:#a7e5a4;color:#142333}.lilypad.goal{background:#e8b85d;color:#142333}
+.loregrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.lore{background:#192c3b;border:1px solid #35536a;border-radius:15px;padding:15px}.lore .emoji{font-size:28px}.lore h3{margin:7px 0}.lore p{color:#d1dce5;font-size:14px;margin:0}.lore small{display:block;color:var(--gold);margin-top:10px}
+footer{text-align:center;color:#8ea5b7;font-size:12px;padding:28px 0 12px}
+@media(max-width:520px){.wrap{padding:13px}.hero{padding:16px}.hero-art{font-size:43px}.gamearea{padding:10px}.puzzle{grid-template-columns:repeat(3,70px)}.tile{height:65px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <div class="brand"><div class="logo">🗺️</div><div><h1>Aventura das Lendas</h1><p class="sub">Santa Catarina • minijogos e mistérios</p></div></div>
+  <div class="stats"><span class="pill">⭐ Pontos: <b id="points">0</b></span><span class="pill">🔓 Lendas: <b id="unlocked">0</b>/4</span></div>
+</header>
+<section class="hero"><div><h2 style="margin:0">Explore. Jogue. Descubra.</h2><p>Escolha um desafio, complete a missão e desbloqueie uma história do folclore catarinense. Dá para jogar no celular ou no computador!</p></div><div class="hero-art">🌊🏝️</div></section>
+
+<section id="menu">
+<h2>Escolha seu minijogo</h2>
+<div class="grid">
+ <article class="gamecard"><div class="gameicon">🚀</div><h3>1. Nave espacial</h3><p>Desvie dos meteoros e sobreviva até alcançar a pontuação necessária.</p><button onclick="startGame('ship')">Jogar nave</button></article>
+ <article class="gamecard"><div class="gameicon">🧩</div><h3>2. Quebra-cabeça</h3><p>Organize os números em ordem para montar o painel misterioso.</p><button onclick="startGame('puzzle')">Montar puzzle</button></article>
+ <article class="gamecard"><div class="gameicon">🐸</div><h3>3. Salto do sapo</h3><p>Ajude o sapinho a pular pelas folhas até chegar à margem segura.</p><button onclick="startGame('frog')">Ajudar o sapo</button></article>
+ <article class="gamecard"><div class="gameicon">🟩</div><h3>4. Aventura quadradinha</h3><p>Um mini jogo de plataforma: pule os obstáculos e alcance a bandeira.</p><button onclick="startGame('platform')">Começar aventura</button></article>
+</div>
+<div class="panel"><h2 style="margin-top:0">📚 Livro de lendas</h2><p class="sub">Complete os jogos para revelar as histórias. Cada desafio desbloqueia uma lenda.</p><div id="loreList" class="loregrid"></div></div>
+</section>
+
+<section id="game" class="panel hidden">
+ <div class="gamehead"><h2 id="gameTitle">Minijogo</h2><button class="secondary" onclick="backMenu()">← Voltar ao menu</button></div>
+ <div class="bar"><span id="progress" style="width:0%"></span></div>
+ <div class="gamearea" id="gameArea"></div>
+ <p class="note" style="margin-top:12px">Dica: você pode voltar ao menu a qualquer momento. Seu progresso fica salvo neste jogo enquanto a página estiver aberta.</p>
+</section>
+<footer>Uma pequena aventura educativa inspirada nas histórias e tradições de Santa Catarina.</footer>
+</div>
+<script>
+const legends=[
+ {id:'ship',name:'A Bruxa de Itaguaçu',emoji:'🌙',title:'A lenda das bruxas de Itaguaçu',text:'Em Florianópolis, as pedras de Itaguaçu aparecem em histórias populares sobre bruxas e noites misteriosas. Diz a tradição oral que encontros encantados explicariam as formas curiosas das pedras. É uma lenda do imaginário local — não um fato comprovado.'},
+ {id:'puzzle',name:'Boitatá',emoji:'🔥',title:'O Boitatá, guardião dos campos',text:'O Boitatá é uma serpente de fogo presente no folclore brasileiro. Em muitas versões, protege os campos e a natureza, assustando quem ameaça provocar incêndios. A história muda de região para região.'},
+ {id:'frog',name:'Lobisomem',emoji:'🐺',title:'O Lobisomem',text:'O Lobisomem é uma figura conhecida em contos populares de várias comunidades brasileiras, inclusive em histórias contadas no Sul. As narrativas falam de transformações misteriosas durante a noite e variam conforme quem as conta.'},
+ {id:'platform',name:'Negrinho do Pastoreio',emoji:'🐎',title:'Negrinho do Pastoreio',text:'Lenda popular muito contada no Sul do Brasil, fala de um menino escravizado que, após sofrer crueldades, é associado à proteção divina. Em algumas versões, as pessoas acendem uma vela e pedem ajuda para encontrar objetos perdidos. A história também lembra a violência da escravidão.'}
+];
+const completed=new Set();let points=0,current='',raf=0,cleanup=null;
+const $=id=>document.getElementById(id);
+function updateStats(){$('points').textContent=points;$('unlocked').textContent=completed.size;renderLore()}
+function renderLore(){
+ $('loreList').innerHTML=legends.map(l=>completed.has(l.id)?`<article class="lore"><div class="emoji">${l.emoji}</div><h3>${l.title}</h3><p>${l.text}</p><small>🔓 Lenda desbloqueada</small></article>`:`<article class="lore"><div class="emoji">🔒</div><h3>${l.name}</h3><p>Complete o minijogo correspondente para revelar esta história.</p><small>🔒 Ainda bloqueada</small></article>`).join('');
+}
+function startGame(id){cancelAnimationFrame(raf);if(cleanup){cleanup();cleanup=null}current=id;$('menu').classList.add('hidden');$('game').classList.remove('hidden');$('gameArea').innerHTML='';$('progress').style.width='0%';const names={ship:'🚀 Nave espacial',puzzle:'🧩 Quebra-cabeça',frog:'🐸 Salto do sapo',platform:'🟩 Aventura quadradinha'};$('gameTitle').textContent=names[id];({ship:shipGame,puzzle:puzzleGame,frog:frogGame,platform:platformGame})[id]()}
+function backMenu(){cancelAnimationFrame(raf);if(cleanup){cleanup();cleanup=null} $('game').classList.add('hidden');$('menu').classList.remove('hidden');updateStats()}
+function win(id,msg){if(!completed.has(id)){completed.add(id);points+=100}updateStats();const a=$('gameArea');a.innerHTML=`<div style="font-size:48px">🎉</div><h2 style="margin:0">Desafio concluído!</h2><p style="text-align:center">${msg}</p><p style="color:var(--gold);text-align:center">+100 pontos • Uma nova lenda foi desbloqueada!</p><div class="controls"><button onclick="backMenu()">Ver lendas e escolher outro jogo</button><button class="secondary" onclick="startGame('${id}')">Jogar novamente</button></div>`}
+function shipGame(){
+ const a=$('gameArea');a.innerHTML=`<p class="note">Mova a nave para desviar dos meteoros. Sobreviva por 20 segundos!</p><canvas id="shipCanvas" width="340" height="300"></canvas><div class="controls"><button id="left">⬅️</button><button id="right">➡️</button><button class="secondary" id="shipStart">Começar</button></div><div class="status" id="shipStatus">Use as setas ou os botões.</div>`;
+ const c=$('shipCanvas'),ctx=c.getContext('2d');let x=160,rocks=[],running=false,start=0,last=0,held={};const status=$('shipStatus');
+ function key(e,v){if(['ArrowLeft','ArrowRight'].includes(e.key)){e.preventDefault();held[e.key]=v}}window.addEventListener('keydown',kd);window.addEventListener('keyup',ku);function kd(e){key(e,true)}function ku(e){key(e,false)}
+ const l=()=>held.ArrowLeft=true,r=()=>held.ArrowRight=true,up=()=>{held.ArrowLeft=false;held.ArrowRight=false};$('left').onpointerdown=l;$('right').onpointerdown=r;$('left').onpointerup=up;$('right').onpointerup=up;$('left').onpointerleave=up;$('right').onpointerleave=up;
+ $('shipStart').onclick=()=>{x=160;rocks=[];running=true;start=performance.now();last=start;status.textContent='Desvie dos meteoros!';raf=requestAnimationFrame(loop)};
+ function loop(t){if(!running)return;let dt=Math.min((t-last)/16,2);last=t;let elapsed=(t-start)/1000;if(held.ArrowLeft)x-=4*dt;if(held.ArrowRight)x+=4*dt;x=Math.max(15,Math.min(325,x));if(Math.random()<.045)rocks.push({x:Math.random()*320+10,y:-15,s:8+Math.random()*8,v:2+Math.random()*2});
+ ctx.clearRect(0,0,340,300);ctx.fillStyle='#0b1724';ctx.fillRect(0,0,340,300);for(let i=0;i<35;i++){ctx.fillStyle='#68839a';ctx.fillRect((i*71)%340,(i*43+Math.floor(t/70))%300,2,2)}
+ ctx.fillStyle='#78e3bd';ctx.beginPath();ctx.moveTo(x,260);ctx.lineTo(x-13,282);ctx.lineTo(x+13,282);ctx.closePath();ctx.fill();
+ for(const q of rocks){q.y+=q.v*dt;ctx.fillStyle='#e98c66';ctx.beginPath();ctx.arc(q.x,q.y,q.s,0,Math.PI*2);ctx.fill();if(Math.hypot(q.x-x,q.y-273)<q.s+7){running=false;status.textContent='Ops! Um meteoro atingiu sua nave. Tente novamente.';return}}
+ rocks=rocks.filter(q=>q.y<320);status.textContent=`Tempo: ${Math.min(20,Math.floor(elapsed))}/20 segundos`; $('progress').style.width=Math.min(100,elapsed/20*100)+'%';if(elapsed>=20){running=false;win('ship','Você desviou dos meteoros e salvou a nave!');return}raf=requestAnimationFrame(loop)}
+ cleanup=()=>{running=false;window.removeEventListener('keydown',kd);window.removeEventListener('keyup',ku)}
+}
+function puzzleGame(){
+ const a=$('gameArea');a.innerHTML=`<p class="note">Toque em um número ao lado do espaço vazio para movê-lo. Deixe tudo em ordem, com o espaço vazio no fim.</p><div id="puzzle" class="puzzle"></div><div class="status" id="pstatus">Organize os números de 1 a 8.</div><button class="secondary" id="shuffle">Embaralhar de novo</button>`;
+ let nums;const board=$('puzzle');function shuffle(){nums=[1,2,3,4,5,6,7,8,0];for(let i=0;i<100;i++){const z=nums.indexOf(0),opts=[z-3,z+3,...(z%3?[z-1]:[]),...(z%3<2?[z+1]:[])].filter(n=>n>=0&&n<9&&Math.abs(Math.floor(n/3)-Math.floor(z/3))+Math.abs(n%3-z%3)===1);let n=opts[Math.floor(Math.random()*opts.length)];[nums[z],nums[n]]=[nums[n],nums[z]]}draw()}
+ function draw(){board.innerHTML=nums.map((n,i)=>`<button class="tile ${n===0?'blank':''}" data-i="${i}" ${n===0?'disabled':''}>${n||''}</button>`).join('');board.querySelectorAll('button').forEach(b=>b.onclick=()=>move(+b.dataset.i));}
+ function move(i){const z=nums.indexOf(0);if(Math.abs(Math.floor(i/3)-Math.floor(z/3))+Math.abs(i%3-z%3)!==1)return;[nums[z],nums[i]]=[nums[i],nums[z]];if(nums.every((n,j)=>n===(j+1)%9)){win('puzzle','Você montou o painel e revelou uma história antiga!')}else draw()}
+ $('shuffle').onclick=shuffle;shuffle();
+}
+function frogGame(){
+ const a=$('gameArea');a.innerHTML=`<p class="note">Leve o sapo até a folha dourada. Só pode pular uma ou duas casas por vez!</p><div class="frogrow" id="frogrow"></div><div class="controls"><button id="jump1">Pular 1 casa</button><button id="jump2">Pular 2 casas</button><button class="secondary" id="frogReset">Recomeçar</button></div><div class="status" id="frogStatus">O sapo está na primeira folha.</div>`;
+ let pos=0;function draw(){const row=$('frogrow');row.innerHTML=Array.from({length:7},(_,i)=>`<div class="lilypad ${i===pos?'frog':i===6?'goal':''}">${i===pos?'🐸':i===6?'🏁':'🍃'}</div>`).join('');$('frogStatus').textContent=`Folha ${pos+1} de 7`; $('jump1').disabled=pos>=6;$('jump2').disabled=pos>=6}
+ function jump(n){if(pos+n>6){$('frogStatus').textContent='Pulo longo demais! Escolha um salto que caiba.';return}pos+=n;if(pos===6)win('frog','O sapinho chegou à margem em segurança!');else draw()}
+ $('jump1').onclick=()=>jump(1);$('jump2').onclick=()=>jump(2);$('frogReset').onclick=()=>{pos=0;draw()};draw()
+}
+function platformGame(){
+ const a=$('gameArea');a.innerHTML=`<p class="note">Chegue à bandeira! Use ← → e espaço no computador ou os botões no celular.</p><canvas id="platCanvas" width="360" height="230"></canvas><div class="controls"><button id="pLeft">⬅️</button><button id="pJump">⬆️ Pular</button><button id="pRight">➡️</button><button class="secondary" id="pReset">Recomeçar</button></div><div class="status" id="pStatus">Encontre o caminho até a bandeira.</div>`;
+ const c=$('platCanvas'),ctx=c.getContext('2d');let p={x:20,y:175,vx:0,vy:0},held={},done=false;const floors=[{x:0,y:205,w:360,h:25},{x:65,y:165,w:60,h:10},{x:155,y:130,w:65,h:10},{x:255,y:95,w:60,h:10}],hazards=[{x:130,y:193,w:20,h:12},{x:230,y:193,w:24,h:12}];function reset(){p={x:20,y:175,vx:0,vy:0};done=false;$('pStatus').textContent='Encontre o caminho até a bandeira.';draw()}
+ function draw(){ctx.clearRect(0,0,360,230);ctx.fillStyle='#132536';ctx.fillRect(0,0,360,230);ctx.fillStyle='#203e50';for(let i=0;i<8;i++)ctx.fillRect(i*48,15+(i%3)*18,20,2);ctx.fillStyle='#64b58b';floors.forEach(f=>ctx.fillRect(f.x,f.y,f.w,f.h));ctx.fillStyle='#ed866c';hazards.forEach(h=>ctx.fillRect(h.x,h.y,h.w,h.h));ctx.fillStyle='#ffd166';ctx.fillRect(326,45,4,50);ctx.beginPath();ctx.moveTo(330,45);ctx.lineTo(350,52);ctx.lineTo(330,60);ctx.fill();ctx.fillStyle='#8de0bd';ctx.fillRect(p.x,p.y,18,22)}
+ function frame(){if(done)return;p.vx=(held.left?-2.7:0)+(held.right?2.7:0);p.x=Math.max(0,Math.min(342,p.x+p.vx));p.vy+=.42;p.y+=p.vy;for(const f of floors){if(p.vy>=0&&p.x+18>f.x&&p.x<f.x+f.w&&p.y+22>=f.y&&p.y+22-p.vy<=f.y){p.y=f.y-22;p.vy=0}}
+ if(p.y>230){reset()}for(const h of hazards){if(p.x+18>h.x&&p.x<h.x+h.w&&p.y+22>h.y&&p.y<h.y+h.h){reset();$('pStatus').textContent='Você encostou num obstáculo. Tente outra rota!';return}}
+ if(p.x>315&&p.y<100){done=true;win('platform','Você alcançou a bandeira e concluiu a aventura!');return}draw();raf=requestAnimationFrame(frame)}
+ function keydown(e){if(['ArrowLeft','ArrowRight',' '].includes(e.key))e.preventDefault();if(e.key==='ArrowLeft')held.left=true;if(e.key==='ArrowRight')held.right=true;if(e.key===' '&&p.vy===0)p.vy=-8}
+ function keyup(e){if(e.key==='ArrowLeft')held.left=false;if(e.key==='ArrowRight')held.right=false}
+ window.addEventListener('keydown',keydown);window.addEventListener('keyup',keyup);
+ const bind=(id,k)=>{const b=$(id);b.onpointerdown=()=>held[k]=true;b.onpointerup=b.onpointerleave=b.onpointercancel=()=>held[k]=false};bind('pLeft','left');bind('pRight','right');$('pJump').onclick=()=>{if(p.vy===0)p.vy=-8};$('pReset').onclick=reset;draw();raf=requestAnimationFrame(frame);cleanup=()=>{cancelAnimationFrame(raf);window.removeEventListener('keydown',keydown);window.removeEventListener('keyup',keyup)}
+}
+renderLore();updateStats();
+</script>
+</body>
+</html>
